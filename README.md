@@ -18,7 +18,7 @@ A **customizable** Markdown renderer wrapped in an Angular component.
       <ng-container>&raquo;</ng-container>
       <ng-container ngxHackableChildren></ng-container>
       <ng-container>&laquo;</ng-container>
-    </strong>
+    </span>
   </ng-template>
   
   <!--blue triple bullets instead of ellipses-->
@@ -48,7 +48,7 @@ A **customizable** Markdown renderer wrapped in an Angular component.
 The `ngxHackableTag` directive should **always** adorn an `ng-template` and accepts the following arguments:
 
 - HTML tags: `a`, `article`, `blockquote`, `code`, `del`, `em`, `h1`, `h2`, `h3`, `h4`, `h5`, `h6`, `hr`, `img`, `li`, `ol`, `p`, `pre`, `strong`, `ul`.
-- HTML entities: `ndash` (rendered from double-dash), `mdash` (rendered from triple-dash), `hellip` (rendered from triple-dot).
+- HTML entities: `ndash` (rendered from `--`), `mdash` (rendered from `---`), `hellip` (rendered from `...`).
 
 The view-nesting `ngxHackableChildren` directive adorning an `ng-container` can (and usually **should**) be used inside templates for all HTML tags except `hr` and `img`.
 
@@ -58,13 +58,3 @@ The following view context properties can be used in templates (see the example 
 - `url` -- resource URL (exposed in `a` and `img` templates).
 
 See [this cheat-sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) (or inspect rendered DOM) in case of uncertainty about which Markdown syntax maps to a given tag. 
-
-## License
-
-Copyright 2018 FlowUp, s.r.o.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
