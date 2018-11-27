@@ -23,7 +23,7 @@ A **customizable** Markdown renderer wrapped in an Angular component.
   
   <!--blue triple bullets instead of ellipses-->
   <ng-template ngxHackableTag="hellip">
-    <span class="color: blue">&bull; &bull; &bull;</span>
+    <span style="color: blue">&bull; &bull; &bull;</span>
   </ng-template>
   
   <!--heading IDs based on their text contents-->

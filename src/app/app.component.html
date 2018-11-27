@@ -1,3 +1,37 @@
-<hackable-markdown>
+<div class="side-container">
+  <textarea [(ngModel)]="markdownSource"></textarea>
+</div>
 
-</hackable-markdown>
+<div class="side-container">
+  <ngx-hackable-markdown [source]="markdownSource">
+
+    <!--styled spans surrouned by guillemets instead of strongs-->
+    <ng-template ngxHackableTag="strong">
+      <span style="font-weight: bold">
+        <ng-container>&raquo;</ng-container>
+        <ng-container ngxHackableChildren></ng-container>
+        <ng-container>&laquo;</ng-container>
+      </span>
+    </ng-template>
+
+    <!--blue triple bullets instead of ellipses-->
+    <ng-template ngxHackableTag="hellip">
+      <span style="color: blue">&bull; &bull; &bull;</span>
+    </ng-template>
+
+    <!--heading IDs based on their text contents-->
+    <ng-template ngxHackableTag="h1" let-text="text">
+      <h1 [id]="text | myTransformPipe">
+        <ng-container ngxHackableChildren></ng-container>
+      </h1>
+    </ng-template>
+
+    <!--custom buttons instead of links-->
+    <ng-template ngxHackableTag="a" let-url="url">
+      <button (click)="myRedirectHandler(url)">
+        <ng-container ngxHackableChildren></ng-container>
+      </button>
+    </ng-template>
+
+  </ngx-hackable-markdown>
+</div>

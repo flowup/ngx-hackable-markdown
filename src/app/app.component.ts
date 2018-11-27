@@ -5,4 +5,10 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent { }
+export class AppComponent {
+  markdownSource: string;
+
+  myRedirectHandler(url: string): void {
+    window.alert(`This link redirects to ${url}`);
+  }
+}

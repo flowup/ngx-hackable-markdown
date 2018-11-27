@@ -1,0 +1,7 @@
+:host {
+  display: flex;
+}
+
+.side-container {
+  flex-basis: 50%;
+}

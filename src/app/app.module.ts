@@ -3,14 +3,18 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { HackableMarkdownModule } from 'ngx-hackable-markdown';
+import { MyTransformPipe } from './my-transform.pipe';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MyTransformPipe,
   ],
   imports: [
     BrowserModule,
-    HackableMarkdownModule
+    FormsModule,
+    HackableMarkdownModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
