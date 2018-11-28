@@ -82,8 +82,6 @@ export class AstNode {
 
 /**
  * Types of templatable output objects (HTML tags and entities; text nodes).
- * - 'text' -- text node.
- * - 'root' -- document container node.
  */
 export const SUPPORTED_TAGS: string[] = [
   'a',
