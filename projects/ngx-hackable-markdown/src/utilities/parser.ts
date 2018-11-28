@@ -7,13 +7,16 @@ import { AstNode, SUPPORTED_TAGS } from './types';
  * @returns The root node of the parsed AST.
  */
 export function parseMarkdown(source: string): AstNode {
-  const flatTokens: MarkdownIt.Token[] = (new MarkdownIt())
+  const tokens: MarkdownIt.Token[] = (new MarkdownIt())
     .parse(source, {})
-    .flatMap(token => token.type === 'inline' ? token.children : token);
+    .reduce((acc, token) => [
+      ...acc,
+      ...token.type === 'inline' ? token.children : [token]
+    ], []);
 
   let currentNode = new AstNode('article');
 
-  flatTokens.forEach(token => {
+  tokens.forEach(token => {
     const [type, suffix] = token.type.match(/^.*?(_open|_close)?$/)!;
     switch (suffix || type) {
       case '_open':

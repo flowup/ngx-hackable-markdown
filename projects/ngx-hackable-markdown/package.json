@@ -1,6 +1,6 @@
 {
   "name": "ngx-hackable-markdown",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A templatable Markdown renderer for Angular",
   "license": "MIT",
   "author": "FlowUp <hello@flowup.cz>",
@@ -23,10 +23,6 @@
     "@angular/core": "^6.0.0"
   },
   "dependencies": {
-    "array.prototype.flatmap": "^1.2.1",
     "markdown-it": "^8.4.2"
-  },
-  "devDependencies": {
-    "@types/array.prototype.flatmap": "^1.2.0"
   }
 }

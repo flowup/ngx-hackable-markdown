@@ -5,7 +5,6 @@
     "entryFile": "src/index.ts"
   },
   "whitelistedNonPeerDependencies": [
-    "array.prototype.flatmap",
     "markdown-it"
   ]
 }

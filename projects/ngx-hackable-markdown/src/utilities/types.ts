@@ -61,10 +61,11 @@ export class AstNode {
     const thisIndex = this.parent.children.indexOf(this);
     const splitNodes: AstNode[] = this.ownText
       .split(delimiter)
-      .flatMap((substring, index) => [
+      .reduce((acc, substring, index) => [
+        ...acc,
         ...index !== 0 ? [new AstNode(tagName)] : [],
         new AstNode('text', substring)
-      ]);
+      ], []);
 
     splitNodes.forEach(node => {
       node.parent = this.parent;
