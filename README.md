@@ -7,6 +7,12 @@ A **customizable** Markdown renderer wrapped in an Angular component.
 
 **This is a 0.x.x version. Breaking API changes might come and bugs might occur!**
 
+## Installation
+
+```
+npm install --save ngx-hackable-markdown
+```
+
 ## Example
 
 ```html
