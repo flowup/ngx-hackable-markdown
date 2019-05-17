@@ -6,7 +6,7 @@ import { parseMarkdown } from '../utilities/parser';
 import { ContextService } from '../services/context.service';
 
 @Component({
-  selector: 'ngx-hackable-markdown',
+  selector: '[ngxHackableMarkdown]',
   templateUrl: './root.component.html',
 })
 export class RootComponent implements OnDestroy {
@@ -24,7 +24,7 @@ export class RootComponent implements OnDestroy {
    * Streamifies inputted markdown source texts.
    */
   @Input()
-  set source(markdown: string | null | undefined) {
+  set ngxHackableMarkdown(markdown: string | null | undefined) {
     this.markdown$.next(markdown || '');
   }
 

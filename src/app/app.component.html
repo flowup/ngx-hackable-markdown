@@ -3,7 +3,7 @@
 </div>
 
 <div class="side-container">
-  <ngx-hackable-markdown [source]="markdownSource">
+  <div [ngxHackableMarkdown]="markdownSource">
 
     <!--styled spans surrouned by guillemets instead of strongs-->
     <ng-template ngxHackableTag="strong">
@@ -33,5 +33,5 @@
       </button>
     </ng-template>
 
-  </ngx-hackable-markdown>
+  </div>
 </div>
