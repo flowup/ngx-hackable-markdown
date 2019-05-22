@@ -1,5 +1,5 @@
 import * as MarkdownIt from 'markdown-it';
-import { AstNode, SUPPORTED_TAGS } from './types';
+import { AstNode, PseudoTagName, TemplatableTagName } from './types';
 
 /**
  * Transforms a markdown source text to a traversable AST.
@@ -7,6 +7,8 @@ import { AstNode, SUPPORTED_TAGS } from './types';
  * @returns The root node of the parsed AST.
  */
 export function parseMarkdown(source: string): AstNode {
+  const supportedTags = Object.values(TemplatableTagName);
+
   const tokens: MarkdownIt.Token[] = (new MarkdownIt())
     .parse(source, {})
     .reduce((acc, token) => [
@@ -14,54 +16,67 @@ export function parseMarkdown(source: string): AstNode {
       ...token.type === 'inline' ? token.children : [token]
     ], []);
 
-  let currentNode = new AstNode('article');
+  let currentNode = new AstNode(PseudoTagName.Root);
 
   tokens.forEach(token => {
     const [type, suffix] = token.type.match(/^.*?(_open|_close)?$/)!;
     switch (suffix || type) {
       case '_open':
-        if (SUPPORTED_TAGS.includes(token.tag)) {
+        if (supportedTags.includes(token.tag)) {
+          const metadata: string[] = TemplatableTagName.A ?
+            [
+              token.attrGet('href') || '',
+              token.attrGet('title') || '',
+            ] :
+            [];
           currentNode = currentNode.appendChild(
-            new AstNode(token.tag, '', token.attrGet('href') || '')
+            new AstNode(token.tag, '', metadata)
           );
         }
         break;
 
       case '_close':
-        if (SUPPORTED_TAGS.includes(token.tag)) {
+        if (supportedTags.includes(token.tag)) {
           currentNode = currentNode.parent!;
         }
         break;
 
       case 'text':
         currentNode
-          .appendChild(new AstNode('text', token.content))
+          .appendChild(new AstNode(PseudoTagName.Text, token.content))
           .split([
-            {delimiter: '---', tagName: 'mdash'},
-            {delimiter: '--', tagName: 'ndash'},
-            {delimiter: '...', tagName: 'hellip'},
+            {delimiter: '---', tagName: TemplatableTagName.Mdash},
+            {delimiter: '--', tagName: TemplatableTagName.Ndash},
+            {delimiter: '...', tagName: TemplatableTagName.Hellip},
           ]);
         break;
 
       case 'code_inline':
         currentNode
-          .appendChild(new AstNode('code'))
-          .appendChild(new AstNode('text', token.content));
+          .appendChild(new AstNode(TemplatableTagName.Code))
+          .appendChild(new AstNode(PseudoTagName.Text, token.content));
         break;
 
       case 'fence':
         currentNode
-          .appendChild(new AstNode('pre'))
-          .appendChild(new AstNode('text', token.content));
+          .appendChild(new AstNode(TemplatableTagName.Pre))
+          .appendChild(new AstNode(PseudoTagName.Text, token.content));
         break;
 
       case 'hr':
-        currentNode.appendChild(new AstNode('hr'));
+        currentNode.appendChild(new AstNode(TemplatableTagName.Hr));
         break;
 
       case 'image':
         currentNode.appendChild(
-          new AstNode('img', '', token.attrGet('src') || '')
+          new AstNode(
+            TemplatableTagName.Img,
+            token.content || '',
+            [
+              token.attrGet('src') || '',
+              token.attrGet('title') || '',
+            ]
+          )
         );
         break;
     }

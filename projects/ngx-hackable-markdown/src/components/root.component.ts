@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { SUPPORTED_TAGS, TagTemplateMap } from '../utilities/types';
+import { DEFAULT_TEMPLATE_SUFFIX, PseudoTagName, TagName, TagTemplateMap, TemplatableTagName } from '../utilities/types';
 import { parseMarkdown } from '../utilities/parser';
 import { ContextService } from '../services/context.service';
 
@@ -10,6 +10,9 @@ import { ContextService } from '../services/context.service';
   templateUrl: './root.component.html',
 })
 export class RootComponent implements OnDestroy {
+  readonly TemplatableTagName = TemplatableTagName;
+  readonly PseudoTagName = PseudoTagName;
+  readonly defaultSuffix = DEFAULT_TEMPLATE_SUFFIX;
 
   /**
    * Streamifies a reference to the component-contained view container into
@@ -36,9 +39,10 @@ export class RootComponent implements OnDestroy {
     const parsedMarkdown$ = this.markdown$.pipe(map(parseMarkdown));
 
     const readyTemplates$ = this.templates$.pipe(
-      filter(templates => SUPPORTED_TAGS
-        .every(tagName => tagName in templates)
-      )
+      filter(templates => (
+        Object.values({...TemplatableTagName, ...PseudoTagName})
+          .every(tagName => tagName in templates)
+      ))
     );
 
     combineLatest(this.viewContainer$, parsedMarkdown$, readyTemplates$)
@@ -68,13 +72,20 @@ export class RootComponent implements OnDestroy {
    * @param template A reference to the <ng-template> to use.
    * @param isDefault Whether the registered template is *not* user-defined.
    */
-  registerTemplate(tagName: string,
+  registerTemplate(tagName: TagName,
                    template: TemplateRef<any>,
                    isDefault: boolean): void {
-    if (!SUPPORTED_TAGS.includes(tagName)) {
+    const allTags = Object.values({...TemplatableTagName, ...PseudoTagName});
+    if (isDefault && !allTags.includes(tagName)) {
+      console.error(`Error in default template: unknown tag "${tagName}".`);
+      return;
+    }
+
+    const templatableTags = Object.values(TemplatableTagName);
+    if (!isDefault && !templatableTags.includes(tagName)) {
       console.warn(
         `A template for unsupported tag "${tagName}" provided.\n` +
-        `Supported tags: ${SUPPORTED_TAGS.join(', ')}.`);
+        `Supported tags: ${templatableTags.join(', ')}.`);
       return;
     }
 

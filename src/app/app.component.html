@@ -20,15 +20,16 @@
     </ng-template>
 
     <!--heading IDs based on their text contents-->
-    <ng-template ngxHackableTag="h1" let-text="text">
-      <h1 [id]="text | myTransformPipe">
+    <ng-template ngxHackableTag="h1" let-content="content">
+      <h1 [id]="content | myTransformPipe">
         <ng-container ngxHackableChildren></ng-container>
       </h1>
     </ng-template>
 
     <!--custom buttons instead of links-->
-    <ng-template ngxHackableTag="a" let-url="url">
-      <button (click)="myRedirectHandler(url)">
+    <ng-template ngxHackableTag="a" let-metadata="metadata">
+      <button (click)="myRedirectHandler(metadata[0])"
+              [title]="metadata[1]">
         <ng-container ngxHackableChildren></ng-container>
       </button>
     </ng-template>

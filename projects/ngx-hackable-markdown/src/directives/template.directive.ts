@@ -1,5 +1,6 @@
 import { Directive, TemplateRef, Host, Input } from '@angular/core';
 import { RootComponent } from '../components/root.component';
+import { DEFAULT_TEMPLATE_SUFFIX, TagName } from '../utilities/types';
 
 @Directive({
   selector: '[ngxHackableTag]'
@@ -16,8 +17,8 @@ export class TemplateDirective {
    */
   @Input('ngxHackableTag')
   set tagName(config: string) {
-    const tagName = config.split(':')[0];
-    const isDefault = config.endsWith(':default');
+    const tagName = config.split(DEFAULT_TEMPLATE_SUFFIX)[0] as TagName;
+    const isDefault = config.endsWith(DEFAULT_TEMPLATE_SUFFIX);
     this.host.registerTemplate(tagName, this.template, isDefault);
   }
 }

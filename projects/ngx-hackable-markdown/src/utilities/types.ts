@@ -1,6 +1,46 @@
 import { TemplateRef } from '@angular/core';
 
 /**
+ * Templatable HTML tags and entities.
+ */
+export enum TemplatableTagName {
+  A = 'a',
+  Blockquote = 'blockquote',
+  Code = 'code',
+  Del = 'del',
+  Em = 'em',
+  H1 = 'h1',
+  H2 = 'h2',
+  H3 = 'h3',
+  H4 = 'h4',
+  H5 = 'h5',
+  H6 = 'h6',
+  Hellip = 'hellip',
+  Hr = 'hr',
+  Img = 'img',
+  Li = 'li',
+  Mdash = 'mdash',
+  Ndash = 'ndash',
+  Ol = 'ol',
+  P = 'p',
+  Pre = 'pre',
+  Strong = 'strong',
+  Ul = 'ul',
+}
+
+/**
+ * Non-templatable helper node types.
+ */
+export enum PseudoTagName {
+  Root = '__root__',
+  Text = '__text__',
+}
+
+export type TagName
+  = TemplatableTagName
+  | PseudoTagName;
+
+/**
  * Map of tag names (see `SUPPORTED_TAGS`) to template refs.
  */
 export interface TagTemplateMap {
@@ -12,28 +52,33 @@ export interface TagTemplateMap {
  */
 export interface AstNodeSplit {
   delimiter: string;
-  tagName: string;
+  tagName: TagName;
 }
 
 /**
  * Output AST node.
  */
 export class AstNode {
+  static readonly contentLeafs: TagName[] = [
+    PseudoTagName.Text,
+    TemplatableTagName.Img
+  ];
+
   parent: AstNode | null = null;
   readonly children: AstNode[] = [];
 
   /**
-   * Joint text of all descendant text-leafs.
+   * Joint text content of all descendant text-leafs.
    */
-  get text(): string {
-    return this.tagName === 'text' ?
-      this.ownText :
-      this.children.map(({text}) => text).join('');
+  get content(): string {
+    return AstNode.contentLeafs.includes(this.tagName) ?
+      this.ownContent :
+      this.children.map(({content}) => content).join('');
   }
 
-  constructor(public readonly tagName: string,
-              public readonly ownText: string = '',
-              public readonly url: string = '') { }
+  constructor(public readonly tagName: TagName,
+              public readonly ownContent: string = '',
+              public readonly metadata: string[] = []) { }
 
   /**
    * Two-way connects a child node to `this`.
@@ -48,7 +93,7 @@ export class AstNode {
 
   /**
    * Splits a parented text node to multiple siblings interlaid with delimiter
-   * nodes according to node's own text and given string delimiters.
+   * nodes according to node's own text content and given string delimiters.
    * @param instructions An array of split instructions consisting of string
    *                     delimiters to split by and tag names of inserted nodes.
    */
@@ -59,12 +104,12 @@ export class AstNode {
 
     const {delimiter, tagName} = instructions[0];
     const thisIndex = this.parent.children.indexOf(this);
-    const splitNodes: AstNode[] = this.ownText
+    const splitNodes: AstNode[] = this.ownContent
       .split(delimiter)
       .reduce((acc, substring, index) => [
         ...acc,
         ...index !== 0 ? [new AstNode(tagName)] : [],
-        new AstNode('text', substring)
+        new AstNode(PseudoTagName.Text, substring)
       ], []);
 
     splitNodes.forEach(node => {
@@ -74,39 +119,11 @@ export class AstNode {
     this.parent = null;
 
     splitNodes
-      .filter(node => node.tagName === 'text')
+      .filter(node => node.tagName === PseudoTagName.Text)
       .forEach(node => {
         node.split(instructions.slice(1));
       });
   }
 }
 
-/**
- * Types of templatable output objects (HTML tags and entities; text nodes).
- */
-export const SUPPORTED_TAGS: string[] = [
-  'a',
-  'article',
-  'blockquote',
-  'code',
-  'del',
-  'em',
-  'h1',
-  'h2',
-  'h3',
-  'h4',
-  'h5',
-  'h6',
-  'hellip',
-  'hr',
-  'img',
-  'li',
-  'mdash',
-  'ndash',
-  'ol',
-  'p',
-  'pre',
-  'strong',
-  'text',
-  'ul',
-];
+export const DEFAULT_TEMPLATE_SUFFIX = ':default';

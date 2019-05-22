@@ -15,8 +15,22 @@ npm install --save ngx-hackable-markdown
 
 ## Example
 
+### my.module.ts
+```typescript
+@NgModule({
+  imports: [
+    CommonModule,
+    HackableMarkdownModule, // DON'T FORGET TO IMPORT
+  ],
+  declarations: [MyComponent],
+  exports: [MyComponent]
+})
+export class MyModule { }
+```
+
+### my.component.html
 ```html
-<ngx-hackable-markdown [source]="markdownSource">
+<div [ngxHackableMarkdown]="markdownSource">
   
   <!--styled spans surrouned by guillemets instead of strongs-->
   <ng-template ngxHackableTag="strong">
@@ -33,34 +47,35 @@ npm install --save ngx-hackable-markdown
   </ng-template>
   
   <!--heading IDs based on their text contents-->
-  <ng-template ngxHackableTag="h1" let-text="text">
-    <h1 [id]="text | myTransformPipe">
+  <ng-template ngxHackableTag="h1" let-content="content">
+    <h1 [id]="content | myTransformPipe">
       <ng-container ngxHackableChildren></ng-container>
     </h1>
   </ng-template>
   
   <!--custom buttons instead of links-->
-  <ng-template ngxHackableTag="a" let-url="url">
-    <button (click)="myRedirectHandler(url)">
+  <ng-template ngxHackableTag="a" let-metadata="metadata">
+    <button (click)="myRedirectHandler(metadata[0])"
+            [title]="metadata[1]">
       <ng-container ngxHackableChildren></ng-container>
     </button>
   </ng-template>
   
-</ngx-hackable-markdown>
+</div>
 ```
 
 ## Templating capabilities
 
 The `ngxHackableTag` directive should **always** adorn an `ng-template` and accepts the following arguments:
 
-- HTML tags: `a`, `article`, `blockquote`, `code`, `del`, `em`, `h1`, `h2`, `h3`, `h4`, `h5`, `h6`, `hr`, `img`, `li`, `ol`, `p`, `pre`, `strong`, `ul`.
+- HTML tags: `a`, `blockquote`, `code`, `del`, `em`, `h1`, `h2`, `h3`, `h4`, `h5`, `h6`, `hr`, `img`, `li`, `ol`, `p`, `pre`, `strong`, `ul`.
 - HTML entities: `ndash` (rendered from `--`), `mdash` (rendered from `---`), `hellip` (rendered from `...`).
 
 The view-nesting `ngxHackableChildren` directive adorning an `ng-container` can (and usually **should**) be used inside templates for all HTML tags except `hr` and `img`.
 
 The following view context properties can be used in templates (see the example above):
 
-- `text` -- the object's recursive text content.
-- `url` -- resource URL (exposed in `a` and `img` templates).
+- `content` -- the object's recursive text content.
+- `metadata` -- an array of metadata like URL, title, etc. Exposed in `a` and `img` templates. E.g. `[foo](bar "baz plox")` yields `['bar', 'baz plox']`
 
 See [this cheat-sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) (or inspect rendered DOM) in case of uncertainty about which Markdown syntax maps to a given tag. 

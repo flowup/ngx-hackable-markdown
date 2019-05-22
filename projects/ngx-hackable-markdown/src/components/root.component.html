@@ -1,130 +1,135 @@
 <ng-container #viewContainer></ng-container>
 
-<ng-template ngxHackableTag="a:default" let-url="url">
-  <a [href]="url" [title]="url">
+<ng-template [ngxHackableTag]="PseudoTagName.Root + defaultSuffix">
+  <ng-container ngxHackableChildren></ng-container>
+</ng-template>
+
+<ng-template [ngxHackableTag]="PseudoTagName.Text + defaultSuffix"
+             let-content="content">
+  <ng-container>{{content}}</ng-container>
+</ng-template>
+
+<ng-template [ngxHackableTag]="TemplatableTagName.A + defaultSuffix"
+             let-metadata="metadata">
+  <a [href]="metadata[0]"
+     [title]="metadata[1]">
     <ng-container ngxHackableChildren></ng-container>
   </a>
 </ng-template>
 
-<ng-template ngxHackableTag="article:default">
-  <article>
-    <ng-container ngxHackableChildren></ng-container>
-  </article>
-</ng-template>
-
-<ng-template ngxHackableTag="blockquote:default">
+<ng-template [ngxHackableTag]="TemplatableTagName.Blockquote + defaultSuffix">
   <blockquote>
     <ng-container ngxHackableChildren></ng-container>
   </blockquote>
 </ng-template>
 
-<ng-template ngxHackableTag="code:default">
+<ng-template [ngxHackableTag]="TemplatableTagName.Code + defaultSuffix">
   <code>
     <ng-container ngxHackableChildren></ng-container>
   </code>
 </ng-template>
 
-<ng-template ngxHackableTag="del:default">
+<ng-template [ngxHackableTag]="TemplatableTagName.Del + defaultSuffix">
   <del>
     <ng-container ngxHackableChildren></ng-container>
   </del>
 </ng-template>
 
-<ng-template ngxHackableTag="em:default">
+<ng-template [ngxHackableTag]="TemplatableTagName.Em + defaultSuffix">
   <em>
     <ng-container ngxHackableChildren></ng-container>
   </em>
 </ng-template>
 
-<ng-template ngxHackableTag="h1:default">
+<ng-template [ngxHackableTag]="TemplatableTagName.H1 + defaultSuffix">
   <h1>
     <ng-container ngxHackableChildren></ng-container>
   </h1>
 </ng-template>
 
-<ng-template ngxHackableTag="h2:default">
+<ng-template [ngxHackableTag]="TemplatableTagName.H2 + defaultSuffix">
   <h2>
     <ng-container ngxHackableChildren></ng-container>
   </h2>
 </ng-template>
 
-<ng-template ngxHackableTag="h3:default">
+<ng-template [ngxHackableTag]="TemplatableTagName.H3 + defaultSuffix">
   <h3>
     <ng-container ngxHackableChildren></ng-container>
   </h3>
 </ng-template>
 
-<ng-template ngxHackableTag="h4:default">
+<ng-template [ngxHackableTag]="TemplatableTagName.H4 + defaultSuffix">
   <h4>
     <ng-container ngxHackableChildren></ng-container>
   </h4>
 </ng-template>
 
-<ng-template ngxHackableTag="h5:default">
+<ng-template [ngxHackableTag]="TemplatableTagName.H5 + defaultSuffix">
   <h5>
     <ng-container ngxHackableChildren></ng-container>
   </h5>
 </ng-template>
 
-<ng-template ngxHackableTag="h6:default">
+<ng-template [ngxHackableTag]="TemplatableTagName.H6 + defaultSuffix">
   <h6>
     <ng-container ngxHackableChildren></ng-container>
   </h6>
 </ng-template>
 
-<ng-template ngxHackableTag="hellip:default">
+<ng-template [ngxHackableTag]="TemplatableTagName.Hellip + defaultSuffix">
   <ng-container>&hellip;</ng-container>
 </ng-template>
 
-<ng-template ngxHackableTag="hr:default">
+<ng-template [ngxHackableTag]="TemplatableTagName.Hr + defaultSuffix">
   <hr>
 </ng-template>
 
-<ng-template ngxHackableTag="img:default" let-url="url">
-  <img [src]="url" [alt]="url" [title]="url">
+<ng-template [ngxHackableTag]="TemplatableTagName.Img + defaultSuffix"
+             let-content="content"
+             let-metadata="metadata">
+  <img [src]="metadata[0]"
+       [title]="metadata[1]"
+       [alt]="content">
 </ng-template>
 
-<ng-template ngxHackableTag="li:default">
+<ng-template [ngxHackableTag]="TemplatableTagName.Li + defaultSuffix">
   <li>
     <ng-container ngxHackableChildren></ng-container>
   </li>
 </ng-template>
 
-<ng-template ngxHackableTag="mdash:default">
+<ng-template [ngxHackableTag]="TemplatableTagName.Mdash + defaultSuffix">
   <ng-container>&mdash;</ng-container>
 </ng-template>
 
-<ng-template ngxHackableTag="ndash:default">
+<ng-template [ngxHackableTag]="TemplatableTagName.Ndash + defaultSuffix">
   <ng-container>&ndash;</ng-container>
 </ng-template>
 
-<ng-template ngxHackableTag="ol:default">
+<ng-template [ngxHackableTag]="TemplatableTagName.Ol + defaultSuffix">
   <ol>
     <ng-container ngxHackableChildren></ng-container>
   </ol>
 </ng-template>
 
-<ng-template ngxHackableTag="p:default">
+<ng-template [ngxHackableTag]="TemplatableTagName.P + defaultSuffix">
   <p>
     <ng-container ngxHackableChildren></ng-container>
   </p>
 </ng-template>
 
-<ng-template ngxHackableTag="pre:default">
+<ng-template [ngxHackableTag]="TemplatableTagName.Pre + defaultSuffix">
   <pre><ng-container ngxHackableChildren></ng-container></pre>
 </ng-template>
 
-<ng-template ngxHackableTag="strong:default">
+<ng-template [ngxHackableTag]="TemplatableTagName.Strong + defaultSuffix">
   <strong>
     <ng-container ngxHackableChildren></ng-container>
   </strong>
 </ng-template>
 
-<ng-template ngxHackableTag="text:default" let-text="text">
-  <ng-container>{{text}}</ng-container>
-</ng-template>
-
-<ng-template ngxHackableTag="ul:default">
+<ng-template [ngxHackableTag]="TemplatableTagName.Ul + defaultSuffix">
   <ul>
     <ng-container ngxHackableChildren></ng-container>
   </ul>
