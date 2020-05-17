@@ -1,6 +1,6 @@
 {
   "name": "ngx-hackable-markdown",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A templatable Markdown renderer for Angular",
   "license": "MIT",
   "author": "FlowUp <hello@flowup.cz>",
@@ -9,8 +9,7 @@
   ],
   "keywords": [
     "angular",
-    "angular6",
-    "angular7",
+    "angular9",
     "markdown",
     "ngx"
   ],
@@ -19,10 +18,11 @@
     "url": "https://github.com/flowup/ngx-hackable-markdown"
   },
   "peerDependencies": {
-    "@angular/common": "^6.0.0",
-    "@angular/core": "^6.0.0"
+    "@angular/common": "^9.1.7",
+    "@angular/core": "^9.1.7",
+    "tslib": "^1.10.0"
   },
   "dependencies": {
-    "markdown-it": "^8.4.2"
+    "markdown-it": "^10.0.0"
   }
 }

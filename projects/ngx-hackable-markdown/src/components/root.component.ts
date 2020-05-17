@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { DEFAULT_TEMPLATE_SUFFIX, PseudoTagName, TagName, TagTemplateMap, TemplatableTagName } from '../utilities/types';
+import { DEFAULT_TEMPLATE_SUFFIX, PseudoTagName, TagName, TagTemplateMap, TemplatableTagName, isTemplatableTagName } from '../utilities/types';
 import { parseMarkdown } from '../utilities/parser';
 import { ContextService } from '../services/context.service';
 
@@ -81,8 +81,8 @@ export class RootComponent implements OnDestroy {
       return;
     }
 
-    const templatableTags = Object.values(TemplatableTagName);
-    if (!isDefault && !templatableTags.includes(tagName)) {
+    if (!isDefault && !isTemplatableTagName(tagName)) {
+      const templatableTags = Object.values(TemplatableTagName);
       console.warn(
         `A template for unsupported tag "${tagName}" provided.\n` +
         `Supported tags: ${templatableTags.join(', ')}.`);

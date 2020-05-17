@@ -31,7 +31,7 @@ export class MyModule { }
 ### my.component.html
 ```html
 <div [ngxHackableMarkdown]="markdownSource">
-  
+
   <!--styled spans surrouned by guillemets instead of strongs-->
   <ng-template ngxHackableTag="strong">
     <span style="font-weight: bold">
@@ -40,19 +40,19 @@ export class MyModule { }
       <ng-container>&laquo;</ng-container>
     </span>
   </ng-template>
-  
+
   <!--blue triple bullets instead of ellipses-->
   <ng-template ngxHackableTag="hellip">
     <span style="color: blue">&bull; &bull; &bull;</span>
   </ng-template>
-  
+
   <!--heading IDs based on their text contents-->
   <ng-template ngxHackableTag="h1" let-content="content">
     <h1 [id]="content | myTransformPipe">
       <ng-container ngxHackableChildren></ng-container>
     </h1>
   </ng-template>
-  
+
   <!--custom buttons instead of links-->
   <ng-template ngxHackableTag="a" let-metadata="metadata">
     <button (click)="myRedirectHandler(metadata[0])"
@@ -60,7 +60,7 @@ export class MyModule { }
       <ng-container ngxHackableChildren></ng-container>
     </button>
   </ng-template>
-  
+
 </div>
 ```
 
@@ -78,4 +78,4 @@ The following view context properties can be used in templates (see the example 
 - `content` -- the object's recursive text content.
 - `metadata` -- an array of metadata like URL, title, etc. Exposed in `a` and `img` templates. E.g. `[foo](bar "baz plox")` yields `['bar', 'baz plox']`
 
-See [this cheat-sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) (or inspect rendered DOM) in case of uncertainty about which Markdown syntax maps to a given tag. 
+See [this cheat-sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) (or inspect rendered DOM) in case of uncertainty about which Markdown syntax maps to a given tag.

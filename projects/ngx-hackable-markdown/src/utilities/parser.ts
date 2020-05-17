@@ -1,5 +1,6 @@
 import * as MarkdownIt from 'markdown-it';
-import { AstNode, PseudoTagName, TemplatableTagName } from './types';
+import * as Token from 'markdown-it/lib/token';
+import { AstNode, PseudoTagName, TemplatableTagName, isTemplatableTagName } from './types';
 
 /**
  * Transforms a markdown source text to a traversable AST.
@@ -7,13 +8,11 @@ import { AstNode, PseudoTagName, TemplatableTagName } from './types';
  * @returns The root node of the parsed AST.
  */
 export function parseMarkdown(source: string): AstNode {
-  const supportedTags = Object.values(TemplatableTagName);
-
-  const tokens: MarkdownIt.Token[] = (new MarkdownIt())
+  const tokens: Token[] = (new MarkdownIt())
     .parse(source, {})
     .reduce((acc, token) => [
       ...acc,
-      ...token.type === 'inline' ? token.children : [token]
+      ...(token.type === 'inline' ? token.children || [] : [token])
     ], []);
 
   let currentNode = new AstNode(PseudoTagName.Root);
@@ -22,7 +21,7 @@ export function parseMarkdown(source: string): AstNode {
     const [type, suffix] = token.type.match(/^.*?(_open|_close)?$/)!;
     switch (suffix || type) {
       case '_open':
-        if (supportedTags.includes(token.tag)) {
+        if (isTemplatableTagName(token.tag)) {
           const metadata: string[] = TemplatableTagName.A ?
             [
               token.attrGet('href') || '',
@@ -30,13 +29,13 @@ export function parseMarkdown(source: string): AstNode {
             ] :
             [];
           currentNode = currentNode.appendChild(
-            new AstNode(token.tag, '', metadata)
+            new AstNode(token.tag as TemplatableTagName, '', metadata)
           );
         }
         break;
 
       case '_close':
-        if (supportedTags.includes(token.tag)) {
+        if (isTemplatableTagName(token.tag)) {
           currentNode = currentNode.parent!;
         }
         break;

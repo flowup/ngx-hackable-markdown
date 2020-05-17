@@ -28,6 +28,11 @@ export enum TemplatableTagName {
   Ul = 'ul',
 }
 
+export function isTemplatableTagName(value: string): value is TemplatableTagName {
+  const tagNames = Object.values(TemplatableTagName) as string[];
+  return tagNames.includes(value);
+}
+
 /**
  * Non-templatable helper node types.
  */
