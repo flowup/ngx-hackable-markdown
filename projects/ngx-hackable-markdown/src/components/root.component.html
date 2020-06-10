@@ -134,3 +134,39 @@
     <ng-container ngxHackableChildren></ng-container>
   </ul>
 </ng-template>
+
+<ng-template [ngxHackableTag]="TemplatableTagName.Table + defaultSuffix">
+  <table>
+    <ng-container ngxHackableChildren></ng-container>
+  </table>
+</ng-template>
+
+<ng-template [ngxHackableTag]="TemplatableTagName.Thead + defaultSuffix">
+  <thead>
+    <ng-container ngxHackableChildren></ng-container>
+  </thead>
+</ng-template>
+
+<ng-template [ngxHackableTag]="TemplatableTagName.Tbody + defaultSuffix">
+  <tbody>
+    <ng-container ngxHackableChildren></ng-container>
+  </tbody>
+</ng-template>
+
+<ng-template [ngxHackableTag]="TemplatableTagName.Th + defaultSuffix">
+  <th>
+    <ng-container ngxHackableChildren></ng-container>
+  </th>
+</ng-template>
+
+<ng-template [ngxHackableTag]="TemplatableTagName.Td + defaultSuffix">
+  <td>
+    <ng-container ngxHackableChildren></ng-container>
+  </td>
+</ng-template>
+
+<ng-template [ngxHackableTag]="TemplatableTagName.Tr + defaultSuffix">
+  <tr>
+    <ng-container ngxHackableChildren></ng-container>
+  </tr>
+</ng-template>

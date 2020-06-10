@@ -26,6 +26,12 @@ export enum TemplatableTagName {
   Pre = 'pre',
   Strong = 'strong',
   Ul = 'ul',
+  Table = 'table',
+  Thead = 'thead',
+  Tbody = 'tbody',
+  Th = 'th',
+  Td = 'td',
+  Tr = 'tr',
 }
 
 export function isTemplatableTagName(value: string): value is TemplatableTagName {
