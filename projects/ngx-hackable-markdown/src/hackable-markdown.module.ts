@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RootComponent } from './components/root.component';
 import { ChildrenDirective } from './directives/children.directive';
 import { TemplateDirective } from './directives/template.directive';
-import { ContextService } from './services/context.service';
+import { TemplateService } from './services/template.service';
 
 @NgModule({
   declarations: [
@@ -16,7 +16,7 @@ import { ContextService } from './services/context.service';
     TemplateDirective,
   ],
   providers: [
-    ContextService,
+    TemplateService,
   ]
 })
 export class HackableMarkdownModule { }

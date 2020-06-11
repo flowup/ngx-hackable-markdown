@@ -28,11 +28,6 @@ export enum TemplatableTagName {
   Ul = 'ul',
 }
 
-export function isTemplatableTagName(value: string): value is TemplatableTagName {
-  const tagNames = Object.values(TemplatableTagName) as string[];
-  return tagNames.includes(value);
-}
-
 /**
  * Non-templatable helper node types.
  */
@@ -45,12 +40,20 @@ export type TagName
   = TemplatableTagName
   | PseudoTagName;
 
+export function isTagName(value: string, allowPseudo = false): value is TagName {
+  const tagNames: string[] = Object.values({
+    ...TemplatableTagName,
+    ...(allowPseudo && PseudoTagName)
+  });
+  return tagNames.includes(value);
+}
+
 /**
  * Map of tag names (see `SUPPORTED_TAGS`) to template refs.
  */
-export interface TagTemplateMap {
-  [tagName: string]: TemplateRef<any>;
-}
+export type TagTemplateMap = {
+  [T in TagName]?: TemplateRef<unknown>;
+};
 
 /**
  * Node split instruction (see `AstNode.split`).
@@ -130,5 +133,3 @@ export class AstNode {
       });
   }
 }
-
-export const DEFAULT_TEMPLATE_SUFFIX = ':default';

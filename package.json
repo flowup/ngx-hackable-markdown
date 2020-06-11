@@ -7,7 +7,8 @@
     "deps": "cd projects/ngx-hackable-markdown && npm i",
     "build": "ng build ngx-hackable-markdown --prod",
     "copy-static": "cp -t dist/ngx-hackable-markdown README.md LICENSE",
-    "pack": "npm run copy-static && cd dist/ngx-hackable-markdown && npm pack"
+    "pack": "npm run copy-static && cd dist/ngx-hackable-markdown && npm pack",
+    "publish": "npm run copy-static && cd dist/ngx-hackable-markdown && npm publish"
   },
   "private": true,
   "dependencies": {

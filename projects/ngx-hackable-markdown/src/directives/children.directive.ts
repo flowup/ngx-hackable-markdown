@@ -1,15 +1,21 @@
-import { Directive, ViewContainerRef } from '@angular/core';
-import { ContextService } from '../services/context.service';
+import { Directive, ViewContainerRef, Input } from '@angular/core';
+import { TemplateService } from '../services/template.service';
+import { AstNode } from '../utilities/types';
 
 @Directive({
   selector: '[ngxHackableChildren]'
 })
 export class ChildrenDirective {
-  constructor(context: ContextService,
-              viewContainer: ViewContainerRef) {
-    (context.currentNode.children || []).forEach(node => {
-      context.currentNode = node;
-      viewContainer.createEmbeddedView(context.templates[node.tagName], node);
+  constructor(private readonly templates: TemplateService,
+              private readonly viewContainer: ViewContainerRef) { }
+
+  @Input('ngxHackableChildren')
+  set children(children: AstNode[]) {
+    children.forEach(node => {
+      this.viewContainer.createEmbeddedView(
+        this.templates.get(node.tagName),
+        node
+      );
     });
   }
 }
