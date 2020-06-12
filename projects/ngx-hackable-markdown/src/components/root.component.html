@@ -195,14 +195,16 @@
   </tbody>
 </ng-template>
 
-<ng-template [ngxHackableTag]="TemplatableTagName.Th + defaultSuffix">
-  <th>
+<ng-template [ngxHackableTag]="TemplatableTagName.Th + defaultSuffix"
+             let-metadata="metadata">
+  <th [style]="metadata[2]">
     <ng-container ngxHackableChildren></ng-container>
   </th>
 </ng-template>
 
-<ng-template [ngxHackableTag]="TemplatableTagName.Td + defaultSuffix">
-  <td>
+<ng-template [ngxHackableTag]="TemplatableTagName.Td + defaultSuffix"
+             let-metadata="metadata">
+  <td [style]="metadata[2]">
     <ng-container ngxHackableChildren></ng-container>
   </td>
 </ng-template>

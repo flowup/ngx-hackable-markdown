@@ -26,6 +26,7 @@ export function parseMarkdown(source: string): AstNode {
             [
               token.attrGet('href') || '',
               token.attrGet('title') || '',
+              token.attrGet('style') || '',
             ] :
             [];
           currentNode = currentNode.appendChild(
