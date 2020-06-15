@@ -177,40 +177,54 @@
   </ul>
 </ng-template>
 
-<ng-template [ngxHackableTag]="TemplatableTagName.Table + defaultSuffix">
+<ng-template [ngxHackableTag]="TemplatableTagName.Table"
+             [isDefault]="true"
+             let-children="children">
   <table>
-    <ng-container ngxHackableChildren></ng-container>
+    <ng-container [ngxHackableChildren]="children"></ng-container>
   </table>
 </ng-template>
 
-<ng-template [ngxHackableTag]="TemplatableTagName.Thead + defaultSuffix">
+<ng-template [ngxHackableTag]="TemplatableTagName.Thead"
+             [isDefault]="true"
+             let-children="children">
   <thead>
-    <ng-container ngxHackableChildren></ng-container>
+    <ng-container [ngxHackableChildren]="children"></ng-container>
   </thead>
 </ng-template>
 
-<ng-template [ngxHackableTag]="TemplatableTagName.Tbody + defaultSuffix">
+<ng-template [ngxHackableTag]="TemplatableTagName.Tbody"
+             [isDefault]="true"
+             let-children="children">
   <tbody>
-    <ng-container ngxHackableChildren></ng-container>
+    <ng-container [ngxHackableChildren]="children"></ng-container>
   </tbody>
 </ng-template>
 
-<ng-template [ngxHackableTag]="TemplatableTagName.Th + defaultSuffix"
-             let-metadata="metadata">
-  <th [style]="metadata[2]">
-    <ng-container ngxHackableChildren></ng-container>
+<ng-template [ngxHackableTag]="TemplatableTagName.Th"
+             [isDefault]="true"
+             let-metadata="metadata"
+             let-style="style"
+             let-children="children">
+  <th [style]="style">
+    <ng-container [ngxHackableChildren]="children"></ng-container>
   </th>
 </ng-template>
 
-<ng-template [ngxHackableTag]="TemplatableTagName.Td + defaultSuffix"
-             let-metadata="metadata">
-  <td [style]="metadata[2]">
-    <ng-container ngxHackableChildren></ng-container>
+<ng-template [ngxHackableTag]="TemplatableTagName.Td"
+             [isDefault]="true"
+             let-metadata="metadata"
+             let-style="style"
+             let-children="children">
+  <td [style]="style">
+    <ng-container [ngxHackableChildren]="children"></ng-container>
   </td>
 </ng-template>
 
-<ng-template [ngxHackableTag]="TemplatableTagName.Tr + defaultSuffix">
+<ng-template [ngxHackableTag]="TemplatableTagName.Tr"
+             [isDefault]="true"
+             let-children="children">
   <tr>
-    <ng-container ngxHackableChildren></ng-container>
+    <ng-container [ngxHackableChildren]="children"></ng-container>
   </tr>
 </ng-template>

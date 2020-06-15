@@ -26,11 +26,12 @@ export function parseMarkdown(source: string): AstNode {
             [
               token.attrGet('href') || '',
               token.attrGet('title') || '',
-              token.attrGet('style') || '',
             ] :
             [];
+          const style: string = (TemplatableTagName.Td || TemplatableTagName.Th) ?
+            token.attrGet('style') || '' : '';
           currentNode = currentNode.appendChild(
-            new AstNode(token.tag as TemplatableTagName, '', metadata)
+            new AstNode(token.tag as TemplatableTagName, '', metadata, style)
           );
         }
         break;
