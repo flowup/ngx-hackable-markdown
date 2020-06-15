@@ -6,10 +6,10 @@
   <div [ngxHackableMarkdown]="markdownSource">
 
     <!--styled spans surrouned by guillemets instead of strongs-->
-    <ng-template ngxHackableTag="strong">
+    <ng-template ngxHackableTag="strong" let-children="children">
       <span style="font-weight: bold">
         <ng-container>&raquo;</ng-container>
-        <ng-container ngxHackableChildren></ng-container>
+        <ng-container [ngxHackableChildren]="children"></ng-container>
         <ng-container>&laquo;</ng-container>
       </span>
     </ng-template>
@@ -20,17 +20,17 @@
     </ng-template>
 
     <!--heading IDs based on their text contents-->
-    <ng-template ngxHackableTag="h1" let-content="content">
+    <ng-template ngxHackableTag="h1" let-content="content" let-children="children">
       <h1 [id]="content | myTransformPipe">
-        <ng-container ngxHackableChildren></ng-container>
+        <ng-container [ngxHackableChildren]="children"></ng-container>
       </h1>
     </ng-template>
 
     <!--custom buttons instead of links-->
-    <ng-template ngxHackableTag="a" let-metadata="metadata">
+    <ng-template ngxHackableTag="a" let-metadata="metadata" let-children="children">
       <button (click)="myRedirectHandler(metadata[0])"
               [title]="metadata[1]">
-        <ng-container ngxHackableChildren></ng-container>
+        <ng-container [ngxHackableChildren]="children"></ng-container>
       </button>
     </ng-template>
 

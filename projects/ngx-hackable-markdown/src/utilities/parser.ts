@@ -1,6 +1,6 @@
 import * as MarkdownIt from 'markdown-it';
 import * as Token from 'markdown-it/lib/token';
-import { AstNode, PseudoTagName, TemplatableTagName, isTemplatableTagName } from './types';
+import { AstNode, PseudoTagName, TemplatableTagName, isTagName } from './types';
 
 /**
  * Transforms a markdown source text to a traversable AST.
@@ -21,7 +21,7 @@ export function parseMarkdown(source: string): AstNode {
     const [type, suffix] = token.type.match(/^.*?(_open|_close)?$/)!;
     switch (suffix || type) {
       case '_open':
-        if (isTemplatableTagName(token.tag)) {
+        if (isTagName(token.tag)) {
           const metadata: string[] = TemplatableTagName.A ?
             [
               token.attrGet('href') || '',
@@ -36,7 +36,7 @@ export function parseMarkdown(source: string): AstNode {
         break;
 
       case '_close':
-        if (isTemplatableTagName(token.tag)) {
+        if (isTagName(token.tag)) {
           currentNode = currentNode.parent!;
         }
         break;
