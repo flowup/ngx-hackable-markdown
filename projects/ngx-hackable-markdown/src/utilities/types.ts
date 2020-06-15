@@ -92,7 +92,8 @@ export class AstNode {
 
   constructor(public readonly tagName: TagName,
               public readonly ownContent: string = '',
-              public readonly metadata: string[] = []) { }
+              public readonly metadata: string[] = [],
+              public readonly style: string = '') { }
 
   /**
    * Two-way connects a child node to `this`.
