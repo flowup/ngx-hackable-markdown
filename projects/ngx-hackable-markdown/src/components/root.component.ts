@@ -8,10 +8,12 @@ import { delay } from 'rxjs/operators';
 @Component({
   selector: '[ngxHackableMarkdown]',
   templateUrl: './root.component.html',
+  providers: [TemplateService],
 })
 export class RootComponent implements OnInit, OnDestroy {
   readonly TemplatableTagName = TemplatableTagName;
   readonly PseudoTagName = PseudoTagName;
+  readonly defaultSuffix = TemplateService.defaultSuffix;
 
   @ViewChild('viewContainer', {read: ViewContainerRef})
   set viewContainer(viewContainer: ViewContainerRef) {

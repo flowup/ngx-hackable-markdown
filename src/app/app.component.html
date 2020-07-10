@@ -35,4 +35,12 @@
     </ng-template>
 
   </div>
+
+  <div [ngxHackableMarkdown]="markdownSource">
+    <ng-template ngxHackableTag="strong" let-children="children">
+      <span style="color: red">
+        <ng-container [ngxHackableChildren]="children"></ng-container>
+      </span>
+    </ng-template>
+  </div>
 </div>
